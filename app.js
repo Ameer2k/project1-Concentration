@@ -17,12 +17,12 @@ const homeBtn = document.querySelector("#homeBtn");
 
 let emoji  = ['🏴‍☠️', '⚔️', '⚓', '⛵', '🪙', '☠️', '🦜', '🌊', '🧭', '🗺️', '💥', '🦈'];
 
-
+let cardElements = []
 let cards = [];
 let firstCard = null;
 let secondCard = null;
 
-let pairs = 4;
+let pairs = null;
 let matches = 0;
 let seconds = 0;
 
@@ -34,7 +34,6 @@ let flipId = null;
 function showGame() {
   home.style.display = "none";
   game.style.display = "block";
-  easyBtn.addEventListener('click', makePairs)  
 
 }
 
@@ -53,22 +52,44 @@ function resetGame() {
   timerId = null;
   flipId = null;
 
-  firstCard = null;
-  secondCard = null;
-
   matches = 0;
   seconds = 0;
   lock = false;
+
+  timer.textContent = 0;
+  matchText.textContent = 0;
+  message.textContent = "";
+  board.innerHTML = '';
+  clearCards();
+  createCards()
+  console.log("kdafh");
 }
+
 
 function makePairs() {
     cards = emoji.slice(0, pairs);
     //Cards = [cards, cards].join();
     cards = [...cards, ...cards];
-    createCards()
-    checkWin()
     console.log(cards);
   
+}
+
+function shuffleCards() {
+  cards.sort(() => Math.random() - 0.5);
+}
+
+function startTimer() {
+  if (timerId !== null) return;
+
+  timerId = setInterval(function() {
+    seconds++;
+    timer.textContent = seconds;
+  }, 1000);
+}
+
+function stopTimer() {
+  clearInterval(timerId);
+  timerId = null;
 }
 
 function createCards() {
@@ -81,24 +102,30 @@ function createCards() {
     card.addEventListener("click", function() {
       flipCard(card);
     });
+    cardElements.push(card)
     board.appendChild(card);
   }
 }
 
 function flipCard(card) {
-  if (card === firstCard) return;
+  if (card.classList.contains('match')) return;
+   card.classList.add('match')
+  
+   startTimer();
+
   card.textContent = card.dataset.emoji;
+ 
   if (firstCard === null) {
     firstCard = card;
   } else {
     secondCard = card;
-    checkMatch();
+    checkMatch(card)
   }
   console.log(card);
   
 }
 
-function checkMatch() {
+function checkMatch(card) {
   if (firstCard.dataset.emoji === secondCard.dataset.emoji) {
     correctMatch();
   } else {
@@ -107,8 +134,13 @@ function checkMatch() {
 }
 
 function correctMatch() {
-    matches++;
-    matchText.textContent = matches;
+  firstCard.classList.add("matched");
+  secondCard.classList.add("matched");
+
+  matches++;
+  matchText.textContent = matches;
+
+  clearCards();
 }
 
 function wrongMatch() {
@@ -127,4 +159,13 @@ function checkWin() {
      message.textContent = " You Win! ";
   }
 }
- 
+
+function startGame(level) {
+  pairs = level;
+  resetGame();
+  makePairs();
+  createCards();
+  showGame();
+}
+
+
