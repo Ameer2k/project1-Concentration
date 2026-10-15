@@ -9,21 +9,21 @@
 </head>
 <body>
     <main>
-        <div id="home-page">
+        <div id="home">
             <h1>Welcome To My First Game</h1>
             <h2>Chose Your Diffculty</h2>
-            <button id="easy-mode">Easy</button>
-            <button id="mediume-mode">Mediume</button>
-            <button id="hard-mode">Hard</button>
+            <button id="easy" onclick="showGame()">Easy</button>
+            <button id="medium" onclick="showGame()">Mediume</button>
+            <button id="hard" onclick="showGame()">Hard</button>
         </div>
         <div id="game">
             <h1>Chose The Right Pire</h1>
             <p>Time: <span id="timer">0</span></p>
-            <p>Pier<span id="mathing-count">0</span></p>
-            <div id="bored"></div>
+            <p>Pier<span id="matches">0</span></p>
+            <div id="board"></div>
             <h2 id="message"></h2>
-            <button id="restart">Restart</button>
-            <button id="home">Back To Main Page</button>
+            <button id="restart" onclick="resetGame()">Restart</button>
+            <button id="homeBtn" onclick="showHome()">Home</button>
         </div>
 
     </main>
