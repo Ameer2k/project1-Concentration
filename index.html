@@ -18,6 +18,11 @@
         <audio src="./gamemu.mp3" autoplay loop></audio>
         <div id="home">
             <h1>Welcome To My First Game</h1>
+            <h2>Chose The Game Mode</h2>
+            <div id="mode">
+                <button id="solo">Solo</button>
+                <button id="computer">Computer</button>
+            </div>
             <h2>Chose Your Diffculty</h2>
             <button id="easy" onclick="startGame(4)">Easy</button>
             <button id="medium" onclick="startGame(6)">Mediume</button>
@@ -27,6 +32,8 @@
             <h1>Chose The Right Pire</h1>
             <p>Time: <span id="timer">0</span></p>
             <p>Pier<span id="matches">0</span></span></p>
+            <p>Pier<span id="playerSc">0</span></span></p>
+            <p>Pier<span id="computerSc">0</span></span></p>
             <div id="board"></div>
             <h2 id="message"></h2>
             <button id="restart" onclick="restartGame()">Restart</button>
