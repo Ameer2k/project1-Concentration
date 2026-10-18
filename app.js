@@ -17,26 +17,34 @@ const homeBtn = document.querySelector("#homeBtn");
 
 let emoji  = ['🏴‍☠️', '⚔️', '⚓', '⛵', '🪙', '☠️', '🦜', '🌊', '🧭', '🗺️', '💥', '🦈'];
 
-let cardElements = []
 let cards = [];
 let firstCard = null;
 let secondCard = null;
 
-let pairs = null;
+let pairs = 4;
 let matches = 0;
 let seconds = 0;
 
 let lock = false;
+let gameWon = false;
+
 let timerId = null;
 let flipId = null;
 
 
+function goHome() {
+  restartGame();
+  showHome();
+}
+
+function restartGame() {
+  startGame(pairs);
+}
+
 function showGame() {
   home.style.display = "none";
   game.style.display = "block";
-
 }
-
 
 function showHome() {
   home.style.display = "block";
@@ -49,20 +57,23 @@ function clearCards() {
 }
 
 function resetGame() {
+  clearCards();
+  clearInterval(timerId);
+  clearTimeout(flipId);
+
   timerId = null;
   flipId = null;
 
   matches = 0;
   seconds = 0;
   lock = false;
+  gameWon = false;
 
   timer.textContent = 0;
   matchText.textContent = 0;
   message.textContent = "";
-  board.innerHTML = '';
-  clearCards();
-  createCards()
-  console.log("kdafh");
+  board.innerHTML = "";
+  console.log("rested");
 }
 
 
@@ -95,37 +106,38 @@ function stopTimer() {
 function createCards() {
   for (let emoji of cards) {
     let card = document.createElement("div");
-    console.log(emoji);
+
+    card.className = "card";
     card.textContent = "?";
     card.dataset.emoji = emoji;
 
     card.addEventListener("click", function() {
       flipCard(card);
     });
-    cardElements.push(card)
+
     board.appendChild(card);
   }
 }
 
+
 function flipCard(card) {
-  if (card.classList.contains('match')) return;
-   card.classList.add('match')
-  
-   startTimer();
+  if (lock || gameWon) return;
+  if (card === firstCard) return;
+  if (card.classList.contains("matched")) return;
+
+  startTimer();
 
   card.textContent = card.dataset.emoji;
- 
+
   if (firstCard === null) {
     firstCard = card;
   } else {
     secondCard = card;
-    checkMatch(card)
+    checkMatch();
   }
-  console.log(card);
-  
 }
 
-function checkMatch(card) {
+function checkMatch() {
   if (firstCard.dataset.emoji === secondCard.dataset.emoji) {
     correctMatch();
   } else {
@@ -141,12 +153,14 @@ function correctMatch() {
   matchText.textContent = matches;
 
   clearCards();
+
+  checkWin();
 }
 
 function wrongMatch() {
   lock = true;
 
-    flipId = setTimeout(function() {
+  flipId = setTimeout(function() {
     firstCard.textContent = "?";
     secondCard.textContent = "?";
 
@@ -154,9 +168,14 @@ function wrongMatch() {
     lock = false;
   }, 1000);
 }
+
 function checkWin() {
   if (matches === pairs) {
-     message.textContent = " You Win! ";
+    gameWon = true;
+    stopTimer();
+
+    message.textContent =
+      " You Win " + seconds + " seconds";
   }
 }
 
