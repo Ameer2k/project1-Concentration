@@ -56,6 +56,11 @@ function clearCards() {
   secondCard = null;
 }
 
+function clearFlip(){
+  firstCard.classList.remove("flip");
+  secondCard.classList.remove("flip");
+}
+
 function resetGame() {
   clearCards();
   clearInterval(timerId);
@@ -79,10 +84,10 @@ function resetGame() {
 
 function makePairs() {
     cards = emoji.slice(0, pairs);
-    //Cards = [cards, cards].join();
     cards = [...cards, ...cards];
     console.log(cards);
-  
+    shuffleCards();
+
 }
 
 function shuffleCards() {
@@ -120,6 +125,7 @@ function createCards() {
 }
 
 
+
 function flipCard(card) {
   if (lock || gameWon) return;
   if (card === firstCard) return;
@@ -127,6 +133,7 @@ function flipCard(card) {
 
   startTimer();
 
+  card.classList.add("flip");
   card.textContent = card.dataset.emoji;
 
   if (firstCard === null) {
@@ -136,6 +143,7 @@ function flipCard(card) {
     checkMatch();
   }
 }
+
 
 function checkMatch() {
   if (firstCard.dataset.emoji === secondCard.dataset.emoji) {
@@ -151,16 +159,18 @@ function correctMatch() {
 
   matches++;
   matchText.textContent = matches;
-
   clearCards();
-
   checkWin();
+  clearFlip()
 }
 
 function wrongMatch() {
   lock = true;
 
   flipId = setTimeout(function() {
+    firstCard.classList.remove("flip");
+    secondCard.classList.remove("flip");
+
     firstCard.textContent = "?";
     secondCard.textContent = "?";
 
@@ -169,20 +179,20 @@ function wrongMatch() {
   }, 1000);
 }
 
+
 function checkWin() {
   if (matches === pairs) {
     gameWon = true;
     stopTimer();
 
     message.textContent =
-      " You Win " + seconds + " seconds";
+      " You Win in " + seconds + " seconds";
   }
 }
 
 function startGame(level) {
   pairs = level;
   resetGame();
-  shuffleCards();
   makePairs();
   createCards();
   showGame();
