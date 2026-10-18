@@ -29,3 +29,19 @@ button {
     justify-content: center;
     margin: 30px auto;
 }
+
+.card {
+  width: 70px;
+  height: 70px;
+  background-color: red;
+  border-radius: 10px;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.matched {
+ background-color: green;
+}

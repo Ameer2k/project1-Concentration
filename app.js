@@ -182,6 +182,7 @@ function checkWin() {
 function startGame(level) {
   pairs = level;
   resetGame();
+  shuffleCards();
   makePairs();
   createCards();
   showGame();
