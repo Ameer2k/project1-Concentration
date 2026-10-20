@@ -158,9 +158,10 @@ function correctMatch() {
 
   matches++;
   matchText.textContent = matches;
-  clearCards();
+ 
+  clearFlip();
   checkWin();
-  clearFlip()
+  clearCards();
 }
 
 function wrongMatch() {
