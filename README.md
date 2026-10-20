@@ -165,17 +165,3 @@ function correctMatch() {
   clearCards();
   checkWin();
 }
-```
-
-This is a suggested correction; the storyboard does not modify your source files.
-
-### Improve the visible labels
-
-| Current text | Suggested text |
-| --- | --- |
-| Chose Your Diffculty | Choose Your Difficulty |
-| Mediume | Medium |
-| Chose The Right Pire | Find the Matching Pairs |
-| Pier | Pairs: |
-
-Set the page title to “Matching Pairs Game”. Remove the `https://cloudflare.com` stylesheet link; it is not a CSS file for this game.
