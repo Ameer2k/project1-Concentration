@@ -1,6 +1,5 @@
 
 
-
 const home = document.querySelector("#home");
 const game = document.querySelector("#game");
 const board = document.querySelector("#board");
@@ -8,15 +7,6 @@ const board = document.querySelector("#board");
 const timer = document.querySelector("#timer");
 const matchText = document.querySelector("#matches");
 const message = document.querySelector("#message");
-
-const solo = document.querySelector("#solo");
-const computer = document.querySelector("#computer");
-
-
-const playerScore = document.querySelector("#playerSc");
-const computerScore = document.querySelector("#computerSc");
-
-
 
 const easyBtn = document.querySelector("#easy");
 const mediumBtn = document.querySelector("#medium");
@@ -39,12 +29,6 @@ let gameWon = false;
 
 let timerId = null;
 let flipId = null;
-
-let playerSc = 0;
-let computerSc = 0;
-
-let availableCards=[];
-let sortedArry = [];
 
 
 function goHome() {
@@ -98,28 +82,15 @@ function resetGame() {
 
 
 function makePairs() {
-    sortedArry = emoji.slice(0, pairs);
-    sortedArry = [...sortedArry, ...sortedArry];
-
-    //cards = emoji.slice(0, pairs);
-    //cards = [...cards, ...cards];
-     
-    //availableCards = emoji.slice(0, pairs);
-    //availableCards = [...cards, ...cards];
+    cards = emoji.slice(0, pairs);
+    cards = [...cards, ...cards];
     console.log(cards);
     shuffleCards();
 
 }
 
 function shuffleCards() {
-  sortedArry.sort(() => Math.random() - 0.5);
-  cards = sortedArry;
-  availableCards = sortedArry;
-  
-  console.log(availableCards);
-  console.log(cards);
-  
-  
+  cards.sort(() => Math.random() - 0.5);
 }
 
 function startTimer() {
@@ -225,5 +196,3 @@ function startGame(level) {
   createCards();
   showGame();
 }
-
-
